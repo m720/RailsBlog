@@ -1,0 +1,34 @@
+FROM ruby:3.2.0-bullseye
+RUN apt-get update &&  apt-get install -y \
+      build-essential \
+      libgeos-dev\
+      postgresql-client\
+      git-core \
+      && apt-get autoremove 
+
+
+ARG USER_ID=1000
+ARG GROUP_ID=1000
+ARG PLATFORM=Linux
+
+ENV HOME /home/dockeruser
+ 
+RUN if [ "$PLATFORM" = 'Linux' ]; then \
+        addgroup --gid $GROUP_ID dockergroup \
+        && adduser --disabled-password --gecos '' --gid $GROUP_ID --uid $USER_ID dockeruser ;\
+    else \
+        adduser --disabled-password --gecos '' --gid $GROUP_ID --uid $USER_ID dockeruser ;\
+    fi
+
+USER $USER_ID
+
+ENV RAILS_ROOT $HOME/app
+RUN mkdir -p $RAILS_ROOT
+
+WORKDIR $RAILS_ROOT
+COPY --chown=$USER_ID:$GROUP_ID Gemfile Gemfile.lock ./
+RUN gem install bundler 
+RUN bundle install --jobs 20 --retry 5
+# RUN chmod +x docker/entrypoint.sh
+
+COPY --chown=$USER_ID:$GROUP_ID . ./
