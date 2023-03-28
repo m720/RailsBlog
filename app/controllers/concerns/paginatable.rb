@@ -1,5 +1,6 @@
-module Paginatable < ActiveSupport::Concern
-  
+module Paginatable 
+  extend ActiveSupport::Concern
+
     included do
       protected
         def paginate(collection:, options: {})
