@@ -1,9 +1,14 @@
 Rails.application.routes.draw do
-  mount_devise_token_auth_for 'User', at: 'auth'
+  mount_devise_token_auth_for 'User', at: 'v1/users'
 
-  mount_devise_token_auth_for 'Admin', at: 'auth'
-  as :admin do
-    # Define routes for Admin within this block.
+  mount_devise_token_auth_for 'Admin', at: 'v1/admins'
+
+  namespace :v1 do
+    namespace :admins do
+      resources :users
+    end
+
+    namespace :users do
+    end
   end
-  # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
 end

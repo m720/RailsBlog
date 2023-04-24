@@ -5,6 +5,8 @@ services:
     volumes:
       - postgis-data:/var/lib/postgresql/data
     env_file: docker/.env
+  redis:
+    image: redis:6.2.11
   app:
     build:
       context: .
@@ -19,6 +21,7 @@ services:
     tty: true
     depends_on:
         - db
+        - redis
 
 volumes:
   postgis-data:
