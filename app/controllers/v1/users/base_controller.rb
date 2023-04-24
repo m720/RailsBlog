@@ -1,4 +1,4 @@
-class V1::User::BaseController < ApplicationController
+class V1::Users::BaseController < ApplicationController
     before_action :authenticate_user!
     
 end

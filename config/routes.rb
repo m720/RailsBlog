@@ -4,11 +4,11 @@ Rails.application.routes.draw do
   mount_devise_token_auth_for 'Admin', at: 'v1/admins'
 
   namespace :v1 do
-    namespace :admin do
-      
+    namespace :admins do
+      resources :users
     end
-    namespace :user do
-      
+
+    namespace :users do
     end
   end
 end
