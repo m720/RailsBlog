@@ -9,6 +9,7 @@ Rails.application.routes.draw do
     end
 
     namespace :users do
+      resources :posts
     end
   end
 end
