@@ -39,6 +39,9 @@ ActiveRecord::Schema[7.0].define(version: 2023_05_09_035328) do
     t.index ["uid", "provider"], name: "index_admins_on_uid_and_provider", unique: true
   end
 
+  create_table "data_migrations", primary_key: "version", id: :string, force: :cascade do |t|
+  end
+
   create_table "posts", force: :cascade do |t|
     t.bigint "user_id"
     t.string "title"
